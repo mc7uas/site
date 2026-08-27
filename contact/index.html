@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>お問い合わせ</title>
+  <title>お問い合わせ（仮）</title>
   
   <style>
     body {
@@ -64,10 +64,21 @@
       border-radius: 4px;
       font-weight: bold;
       cursor: pointer;
+      margin-bottom: 12px;
     }
 
     .submit-btn:hover {
       background-color: #555;
+    }
+
+    /* 赤文字の警告メッセージ */
+    .warning-text {
+      color: #e53e3e;
+      font-size: 13px;
+      font-weight: bold;
+      line-height: 1.5;
+      text-align: center;
+      margin-top: 10px;
     }
 
     .btn-back {
@@ -99,7 +110,11 @@
       </div>
 
       <button type="submit" class="submit-btn">送信する</button>
-      <font color=red>405エラーが出ます。そもそもお問い合わせを送信しません。なのでお問い合わせの意味がありません。</font>
+
+      <!-- 絶望の赤文字メッセージ -->
+      <p class="warning-text">
+        405エラーが出ます。そもそもお問い合わせを送信しません。なのでお問い合わせの意味がありません。
+      </p>
     </form>
   </div>
 
