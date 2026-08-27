@@ -15,6 +15,47 @@
       margin: 40px auto;
       padding: 0 20px;
       text-align: center;
+      position: relative; /* 右上配置の基準点 */
+    }
+
+    /* 右上検索エリア */
+    .top-right-search {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+
+    .search-form {
+      display: flex;
+      gap: 4px;
+    }
+
+    .search-input {
+      padding: 4px 8px;
+      font-size: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      width: 130px;
+    }
+
+    .search-input:focus {
+      border-color: #333;
+    }
+
+    .search-button {
+      padding: 4px 10px;
+      font-size: 12px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .search-button:hover {
+      background-color: #555;
     }
 
     /* タイトルなどの見出し */
@@ -42,45 +83,17 @@
       margin-left: 8px;
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
     }
-
-    /* 検索フォームのスタイル */
-    .search-form {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .search-input {
-      padding: 8px 12px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-      width: 200px;
-    }
-
-    .search-input:focus {
-      border-color: #333;
-    }
-
-    .search-button {
-      padding: 8px 16px;
-      font-size: 14px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .search-button:hover {
-      background-color: #555;
-    }
   </style>
 </head>
 <body>
+
+  <!-- 右上検索エリア -->
+  <search class="top-right-search">
+    <div class="search-form">
+      <input type="search" id="pageSearchInput" placeholder="検索..." class="search-input" onkeydown="if(event.key==='Enter') searchOnPage()">
+      <button type="button" onclick="searchOnPage()" class="search-button">検索</button>
+    </div>
+  </search>
 
   <!-- カウンター部分 -->
   <p class="counter-container">
@@ -89,14 +102,10 @@
 
   <h1>これはペンです。</h1>
   <h2>This is a pen.</h2>
-
-  <!-- ページ内検索エリア -->
-  <search>
-    <div class="search-form">
-      <input type="search" id="pageSearchInput" placeholder="ページ内を検索..." class="search-input" onkeydown="if(event.key==='Enter') searchOnPage()">
-      <button type="button" onclick="searchOnPage()" class="search-button">検索</button>
-    </div>
-  </search>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <font color="#808080">ここだけはAIに頼らずに作った。</font>
   <!-- 通信＆カウント表示＆検索処理のスクリプト -->
   <script>
