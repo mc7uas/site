@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ううう</title>
+  <title>マイウェブサイト</title>
   
   <style>
-    /* 全体の基本設定 */
     body {
       font-family: sans-serif;
       background-color: #f5f5f5;
@@ -17,146 +16,119 @@
       text-align: center;
     }
 
-    /* タイトルなどの見出し */
-    h1, h2 {
+    h1 {
       margin-bottom: 10px;
     }
 
-    /* アクセスカウンターの枠組み */
-    .counter-container {
-      margin: 30px 0;
-      font-size: 18px;
-      font-weight: bold;
+    p.subtitle {
+      color: #666;
+      margin-bottom: 30px;
     }
 
-    /* 数字部分（黒背景＋緑文字のレトロ風） */
-    #count {
-      display: inline-block;
-      background-color: #111;
-      color: #00ff66;
-      font-family: 'Courier New', monospace;
-      font-size: 24px;
-      padding: 4px 12px;
-      border-radius: 4px;
-      letter-spacing: 3px;
-      margin-left: 8px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+    .card-container {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
     }
 
-    /* 中央配置の検索フォーム */
-    .search-form {
-      margin: 20px 0;
+    .nav-links {
       display: flex;
-      justify-content: center;
-      gap: 6px;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    .search-input {
-      padding: 8px 12px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-      width: 200px;
-    }
-
-    .search-input:focus {
-      border-color: #333;
-    }
-
-    .search-button {
-      padding: 8px 16px;
-      font-size: 14px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .search-button:hover {
-      background-color: #555;
-    }
-
-    /* 注釈テキスト（グレー表示） */
-    .note {
-      color: #808080;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-
-    /* リンクボタンコンテナ */
-    .link-container {
-      margin-top: 30px;
-    }
-
-    /* リンクボタンのスタイル */
     .nav-btn {
-      display: inline-block;
-      padding: 10px 20px;
+      display: block;
+      padding: 12px;
       background-color: #333;
       color: #fff;
       text-decoration: none;
       border-radius: 4px;
       font-weight: bold;
-      font-size: 14px;
       transition: background-color 0.2s;
     }
 
     .nav-btn:hover {
       background-color: #555;
     }
+
+    /* 共有ボタン周りのスタイル */
+    .share-container {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+    }
+
+    .share-btn {
+      padding: 10px 20px;
+      background-color: #4A5568;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .share-btn:hover {
+      background-color: #2D3748;
+    }
+
+    .share-msg {
+      font-size: 12px;
+      color: #38A169;
+      margin-top: 8px;
+      height: 16px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- カウンター部分 -->
-  <p class="counter-container">
-    アクセスカウンター: <span id="count">000000</span>
-  </p>
+  <h1>マイウェブサイトへようこそ！</h1>
+  <p class="subtitle">ゆっくりしていってね</p>
 
-  <h1>これはペンです。</h1>
-  <h2>This is a pen.</h2>
-
-  <!-- 中央配置の検索エリア -->
-  <search>
-    <div class="search-form">
-      <input type="search" id="pageSearchInput" placeholder="検索..." class="search-input" onkeydown="if(event.key==='Enter') searchOnPage()">
-      <button type="button" onclick="searchOnPage()" class="search-button">検索</button>
+  <div class="card-container">
+    <h2>コンテンツ</h2>
+    <div class="nav-links">
+      <a href="contact/" class="nav-btn">お問い合わせ（仮）</a>
     </div>
-  </search>
 
-  <p class="note">ここだけはAIに頼らずに作った。</p>
-
-  <!-- お問い合わせページへのリンクボタン -->
-  <div class="link-container">
-    <a href="./contact/" class="nav-btn">お問い合わせはこちら</a>
+    <!-- サイトを共有するボタン -->
+    <div class="share-container">
+      <button type="button" id="shareBtn" class="share-btn" onclick="shareSite()">
+        🔗 このサイトを共有する
+      </button>
+      <p id="shareMsg" class="share-msg"></p>
+    </div>
   </div>
 
-  <!-- 通信＆カウント表示＆検索処理のスクリプト -->
   <script>
-    // 1. カウント数の取得・永続化サーバーとの通信
-    fetch('https://site-vjjv.onrender.com/count')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('count').innerText = String(data.visits).padStart(6, '0');
-      })
-      .catch(err => {
-        console.error('取得失敗:', err);
-      });
+    function shareSite() {
+      const shareData = {
+        title: document.title || 'マイウェブサイト',
+        text: 'mc7uas.github.io/site/ Webサイトです！ぜひ見に来てください！',
+        url: window.location.href
+      };
 
-    // 2. JavaScriptによる即時ページ内検索
-    function searchOnPage() {
-      const input = document.getElementById('pageSearchInput');
-      const query = input.value.trim();
-
-      if (!query) return;
-
-      const found = window.find(query);
-
-      if (!found) {
-        alert('「' + query + '」は見つかりませんでした！');
+      // スマホ等でWeb Share APIが使える場合
+      if (navigator.share) {
+        navigator.share(shareData)
+          .catch((err) => console.log('共有がキャンセルされました', err));
+      } else {
+        // PCなどで使えない場合はクリップボードにURLをコピー
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => {
+            const msg = document.getElementById('shareMsg');
+            msg.textContent = 'URLをクリップボードにコピーしました！';
+            setTimeout(() => { msg.textContent = ''; }, 3000);
+          })
+          .catch(() => {
+            alert('URLのコピーに失敗しました。');
+          });
       }
     }
   </script>
