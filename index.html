@@ -11,12 +11,12 @@
   <h2>This is a pen.</h2>
 
   <script>
-    fetch('https://site-vjjv.onrender.com/')
+    // 末尾に /count を追加
+    fetch('https://site-vjjv.onrender.com/count')
       .then(res => res.json())
       .then(data => {
-        // Render側が { "value": 1 } で返す設定なら data.value でOKです
-        // もし { "visits": 1 } なら data.visits に変更してください
-        document.getElementById('count').innerText = String(data.value).padStart(6, '0');
+        // data.value を data.visits に変更
+        document.getElementById('count').innerText = String(data.visits).padStart(6, '0');
       })
       .catch(err => {
         console.error('取得失敗:', err);
