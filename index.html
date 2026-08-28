@@ -3,216 +3,280 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ううう</title>
-  
+  <title>カスタム共有 - ううう</title>
+
   <style>
-    /* 全体の基本設定 */
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: #f5f5f5;
       color: #333;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 0 20px;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    h1 {
+      font-size: 20px;
       text-align: center;
+      margin-bottom: 4px;
     }
 
-    /* タイトルなどの見出し */
-    h1, h2 {
-      margin-bottom: 10px;
+    .subtitle {
+      color: #666;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    /* アクセスカウンターの枠組み */
-    .counter-container {
-      margin: 30px 0;
-      font-size: 18px;
-      font-weight: bold;
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
     }
 
-    /* 数字部分（黒背景＋緑文字のレトロ風） */
-    #count {
-      display: inline-block;
-      background-color: #111;
-      color: #00ff66;
-      font-family: 'Courier New', monospace;
-      font-size: 24px;
-      padding: 4px 12px;
-      border-radius: 4px;
-      letter-spacing: 3px;
-      margin-left: 8px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+    .form-group {
+      margin-bottom: 14px;
     }
 
-    /* 中央配置の検索フォーム */
-    .search-form {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .search-input {
-      padding: 8px 12px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-      width: 200px;
-    }
-
-    .search-input:focus {
-      border-color: #333;
-    }
-
-    .search-button {
-      padding: 8px 16px;
-      font-size: 14px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .search-button:hover {
-      background-color: #555;
-    }
-
-    /* 注釈テキスト（グレー表示） */
-    .note {
-      color: #808080;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-
-    /* ナビゲーション・リンクエリア */
-    .link-container {
-      margin-top: 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* 黒ボタン（お問い合わせなど） */
-    .nav-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #333;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-      font-size: 14px;
-      transition: background-color 0.2s;
-    }
-
-    .nav-btn:hover {
-      background-color: #555;
-    }
-
-    /* 共有ボタン */
-    .share-btn {
-      padding: 8px 16px;
-      background-color: #4A5568;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
+    .form-group label {
+      display: block;
       font-weight: bold;
       font-size: 13px;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    .input-text, .preset-select, .custom-textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      background-color: #fafafa;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+
+    .input-text:focus, .custom-textarea:focus {
+      border-color: #06C755;
+      background-color: #fff;
+    }
+
+    .custom-textarea {
+      height: 70px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    /* --- LINE風リアルプレビュー --- */
+    .chat-container {
+      background-color: #7494C0; /* LINEトーク画面の背景色 */
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .chat-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .chat-bubble {
+      background-color: #85E249; /* 送信バブル（緑） */
+      border-radius: 16px 16px 2px 16px;
+      padding: 10px;
+      max-width: 85%;
+      margin-left: auto;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .ogp-card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+    }
+
+    .ogp-info {
+      padding: 10px 12px;
+    }
+
+    .ogp-title {
+      font-weight: bold;
+      font-size: 14px;
+      color: #111;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      word-break: break-all;
+    }
+
+    .ogp-desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .ogp-domain {
+      font-size: 10px;
+      color: #999;
+      margin-top: 6px;
+    }
+
+    .share-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #06C755; /* LINEグリーン */
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
       cursor: pointer;
       transition: background-color 0.2s;
+      margin-top: 16px;
     }
 
     .share-btn:hover {
-      background-color: #2D3748;
+      background-color: #05b34c;
     }
 
     .share-msg {
       font-size: 12px;
-      color: #38A169;
-      margin-top: 4px;
-      height: 16px;
+      color: #2b6cb0;
+      text-align: center;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+
+    .btn-back {
+      display: block;
+      text-align: center;
+      color: #666;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .btn-back:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <!-- カウンター部分 -->
-  <p class="counter-container">
-    アクセスカウンター: <span id="count">000000</span>
-  </p>
+  <h1>🔗 OGP共有ジェネレーター</h1>
+  <p class="subtitle">タイトルと説明文を自由にカスタムして共有できます</p>
 
-  <h1>これはペンです。</h1>
-  <h2>This is a pen.</h2>
-
-  <!-- 中央配置の検索エリア -->
-  <search>
-    <div class="search-form">
-      <input type="search" id="pageSearchInput" placeholder="検索..." class="search-input" onkeydown="if(event.key==='Enter') searchOnPage()">
-      <button type="button" onclick="searchOnPage()" class="search-button">検索</button>
+  <div class="card">
+    <!-- タイトル入力 -->
+    <div class="form-group">
+      <label for="titleInput">題名（タイトル）:</label>
+      <input type="text" id="titleInput" class="input-text" value="ううう" oninput="updatePreview()">
     </div>
-  </search>
 
-  <p class="note">ここだけはAIに頼らずに作った。</p>
+    <!-- 定型文選択 -->
+    <div class="form-group">
+      <label for="presetSelect">定型文から選ぶ:</label>
+      <select id="presetSelect" class="preset-select" onchange="applyPreset()">
+        <option value="">（選択してください）</option>
+        <option value="これはペンです。This is a pen.">これはペンです。This is a pen.</option>
+        <option value="伝説のアクセスカウンターがあるサイトを見つけた！">伝説のアクセスカウンターがあるサイトを見つけた！</option>
+        <option value="ここだけはAIに頼らずに作ったらしい。">ここだけはAIに頼らずに作ったらしい。</option>
+        <option value="マイクラサーバー作ったから来て！">マイクラサーバー作ったから来て！</option>
+      </select>
+    </div>
 
-  <!-- リンク＆共有ボタンエリア -->
-  <div class="link-container">
-    <a href="./contact/" class="nav-btn">お問い合わせはこちら</a>
+    <!-- 自由入力フォーム -->
+    <div class="form-group">
+      <label for="customInput">説明文（ディスクリプション）:</label>
+      <textarea id="customInput" class="custom-textarea" placeholder="好きな説明文を入力してください..." oninput="updatePreview()">これはペンです。This is a pen.</textarea>
+    </div>
 
-    <button type="button" class="share-btn" onclick="shareSite()">
-      🔗 このサイトを共有する
+    <!-- LINE風リアルプレビュー -->
+    <div class="chat-container">
+      <div class="chat-label">💬 LINEカード表示プレビュー</div>
+      <div class="chat-bubble">
+        <div class="ogp-card">
+          <div class="ogp-info">
+            <div id="previewTitle" class="ogp-title">ううう</div>
+            <div id="previewText" class="ogp-desc">これはペンです。This is a pen.</div>
+            <div class="ogp-domain">site-vjjv.onrender.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="share-btn" onclick="executeCustomShare()">
+      🔗 この内容で共有する（URLのみ送信）
     </button>
+
     <p id="shareMsg" class="share-msg"></p>
   </div>
 
-  <!-- スクリプト類 -->
+  <a href="../" class="btn-back">← トップページに戻る</a>
+
   <script>
-    // 1. アクセスカウンター処理
-    fetch('https://site-vjjv.onrender.com/count')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('count').innerText = String(data.visits).padStart(6, '0');
-      })
-      .catch(err => {
-        console.error('取得失敗:', err);
-      });
-
-    // 2. ページ内検索処理
-    function searchOnPage() {
-      const input = document.getElementById('pageSearchInput');
-      const query = input.value.trim();
-
-      if (!query) return;
-
-      const found = window.find(query);
-
-      if (!found) {
-        alert('「' + query + '」は見つかりませんでした！');
+    function applyPreset() {
+      const select = document.getElementById('presetSelect');
+      if (select.value) {
+        document.getElementById('customInput').value = select.value;
+        updatePreview();
       }
     }
 
-    // 3. サイト共有処理
-    function shareSite() {
+    function updatePreview() {
+      const title = document.getElementById('titleInput').value.trim();
+      const text = document.getElementById('customInput').value.trim();
+
+      document.getElementById('previewTitle').innerText = title || '（タイトルなし）';
+      document.getElementById('previewText').innerText = text || '（説明文なし）';
+    }
+
+    function executeCustomShare() {
+      const title = document.getElementById('titleInput').value.trim() || 'ううう';
+      const text = document.getElementById('customInput').value.trim() || 'これはペンです。This is a pen.';
+      const msg = document.getElementById('shareMsg');
+
+      const renderServerUrl = 'https://site-vjjv.onrender.com/share';
+      const shareUrl = `${renderServerUrl}?title=${encodeURIComponent(title)}&text=${encodeURIComponent(text)}`;
+
+      // ★重要: titleやtextを入れず、url のみ渡すことで「URLテキストだけ」をLINEに流す
       const shareData = {
-        title: document.title || 'ううう',
-        text: 'これはペンです。',
-        url: window.location.href
+        url: shareUrl
       };
+
+      msg.style.color = '#2b6cb0';
+      msg.textContent = '⏳ 共有用URLを準備中...';
 
       if (navigator.share) {
         navigator.share(shareData)
-          .catch((err) => console.log('共有がキャンセルされました', err));
-      } else {
-        navigator.clipboard.writeText(window.location.href)
           .then(() => {
-            const msg = document.getElementById('shareMsg');
-            msg.textContent = 'URLをクリップボードにコピーしました！';
-            setTimeout(() => { msg.textContent = ''; }, 3000);
+            msg.textContent = '';
+          })
+          .catch((err) => {
+            msg.textContent = '';
+            console.log('共有キャンセル', err);
+          });
+      } else {
+        // クリップボードコピー
+        navigator.clipboard.writeText(shareUrl)
+          .then(() => {
+            msg.style.color = '#38A169';
+            msg.textContent = '共有URLをコピーしました！';
+            setTimeout(() => { msg.textContent = ''; }, 4000);
           })
           .catch(() => {
-            alert('URLのコピーに失敗しました。');
+            msg.style.color = '#e53e3e';
+            msg.textContent = 'コピーに失敗しました。';
           });
       }
     }
