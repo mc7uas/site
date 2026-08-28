@@ -13,7 +13,6 @@ const redis = Redis.fromEnv();
 // --- 1. アクセスカウンター API ---
 app.get('/count', async (req, res) => {
   try {
-    // Redis内で 'visits' というキーの数字を 1 増やす（無ければ1で自動作成）
     const count = await redis.incr('visits');
     res.json({ visits: count });
   } catch (error) {
@@ -22,31 +21,35 @@ app.get('/count', async (req, res) => {
   }
 });
 
-// --- 2. カスタムOGP共有用 API (★追加) ---
+// --- 2. カスタムOGP共有用 API (タイトル・説明文の動的化) ---
 app.get('/share', (req, res) => {
+  const customTitle = req.query.title || 'ううう';
   const customText = req.query.text || 'これはペンです。This is a pen.';
 
   // XSS対策のエスケープ処理
-  const safeText = String(customText)
+  const escapeHtml = (str) => String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 
-  // リダイレクト先のサイトトップURL
+  const safeTitle = escapeHtml(customTitle);
+  const safeText = escapeHtml(customText);
+
+  // リダイレクト先トップページ
   const targetUrl = 'https://mc7uas.github.io/site/';
   
   // OGP用の自分自身のURL
-  const currentUrl = `https://site-vjjv.onrender.com/share?text=${encodeURIComponent(customText)}`;
+  const currentUrl = `https://site-vjjv.onrender.com/share?title=${encodeURIComponent(customTitle)}&text=${encodeURIComponent(customText)}`;
 
   const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ううう</title>
+  <title>${safeTitle}</title>
 
   <!-- LINE等でカード表示させるための動的OGP設定 -->
-  <meta property="og:title" content="ううう">
+  <meta property="og:title" content="${safeTitle}">
   <meta property="og:description" content="${safeText}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${currentUrl}">
