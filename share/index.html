@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ううう</title>
+
+  <!-- OGP（SNS・LINE用プレビュー設定） -->
+  <meta property="og:title" content="ううう">
+  <meta property="og:description" content="これはペンです。This is a pen.">
+  <meta property="og:type" content="website">
+
+  <style>
+    /* 全体の基本設定 */
+    body {
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    /* タイトルなどの見出し */
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+
+    /* アクセスカウンターの枠組み */
+    .counter-container {
+      margin: 30px 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* 数字部分（黒背景＋緑文字のレトロ風） */
+    #count {
+      display: inline-block;
+      background-color: #111;
+      color: #00ff66;
+      font-family: 'Courier New', monospace;
+      font-size: 24px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      letter-spacing: 3px;
+      margin-left: 8px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+    }
+
+    /* 中央配置の検索フォーム */
+    .search-form {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .search-input {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      width: 200px;
+    }
+
+    .search-input:focus {
+      border-color: #333;
+    }
+
+    .search-button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .search-button:hover {
+      background-color: #555;
+    }
+
+    /* 注釈テキスト（グレー表示） */
+    .note {
+      color: #808080;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    /* ナビゲーション・リンクエリア */
+    .link-container {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* 黒ボタン（お問い合わせなど） */
+    .nav-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .nav-btn:hover {
+      background-color: #555;
+    }
+
+    /* 定型文選択＆共有エリア */
+    .share-area {
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 320px;
+      box-sizing: border-box;
+    }
+
+    .share-label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #666;
+      text-align: left;
+    }
+
+    .preset-select {
+      padding: 8px;
+      font-size: 13px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      background-color: #fafafa;
+      cursor: pointer;
+    }
+
+    .share-btn {
+      padding: 10px;
+      background-color: #4A5568;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .share-btn:hover {
+      background-color: #2D3748;
+    }
+
+    .share-msg {
+      font-size: 12px;
+      color: #38A169;
+      margin: 0;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- カウンター部分 -->
+  <p class="counter-container">
+    アクセスカウンター: <span id="count">000000</span>
+  </p>
+
+  <h1>これはペンです。</h1>
+  <h2>This is a pen.</h2>
+
+  <!-- 中央配置の検索エリア -->
+  <search>
+    <div class="search-form">
+      <input type="search" id="pageSearchInput" placeholder="検索..." class="search-input" onkeydown="if(event.key==='Enter') searchOnPage()">
+      <button type="button" onclick="searchOnPage()" class="search-button">検索</button>
+    </div>
+  </search>
+
+  <p class="note">ここだけはAIに頼らずに作った。</p>
+
+  <!-- リンク＆共有ボタンエリア -->
+  <div class="link-container">
+    <a href="./contact/" class="nav-btn">お問い合わせはこちら</a>
+
+    <!-- 定型文選択付き共有ボックス -->
+    <div class="share-area">
+      <label class="share-label" for="presetSelect">共有メッセージを選択:</label>
+      <select id="presetSelect" class="preset-select">
+        <option value="これはペンです。This is a pen.">これはペンです。（デフォルト）</option>
+        <option value="伝説のレトロアクセスカウンターがあるサイトを見つけた！">伝説のアクセスカウンターを見つけた！</option>
+        <option value="ここだけはAIに頼らずに作ったらしい。">ここだけはAIに頼らずに作ったらしい。</option>
+        <option value="お問い合わせページが絶望的でおすすめです。">絶望のお問い合わせページ</option>
+      </select>
+
+      <button type="button" class="share-btn" onclick="shareSite()">
+        🔗 選択した文章で共有する
+      </button>
+      <p id="shareMsg" class="share-msg"></p>
+    </div>
+  </div>
+
+  <!-- スクリプト類 -->
+  <script>
+    // 1. アクセスカウンター処理
+    fetch('https://site-vjjv.onrender.com/count')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('count').innerText = String(data.visits).padStart(6, '0');
+      })
+      .catch(err => {
+        console.error('取得失敗:', err);
+      });
+
+    // 2. ページ内検索処理
+    function searchOnPage() {
+      const input = document.getElementById('pageSearchInput');
+      const query = input.value.trim();
+
+      if (!query) return;
+
+      const found = window.find(query);
+
+      if (!found) {
+        alert('「' + query + '」は見つかりませんでした！');
+      }
+    }
+
+    // 3. 定型文付きサイト共有処理
+    function shareSite() {
+      const select = document.getElementById('presetSelect');
+      const selectedText = select.value;
+
+      const shareData = {
+        title: document.title || 'ううう',
+        text: selectedText,
+        url: window.location.href
+      };
+
+      // スマホ（LINEやXの共有メニューが開く）
+      if (navigator.share) {
+        navigator.share(shareData)
+          .catch((err) => console.log('共有がキャンセルされました', err));
+      } else {
+        // PC（テキスト + URL をコピー）
+        const textToCopy = selectedText + '\n' + window.location.href;
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => {
+            const msg = document.getElementById('shareMsg');
+            msg.textContent = '文章とURLをコピーしました！';
+            setTimeout(() => { msg.textContent = ''; }, 3000);
+          })
+          .catch(() => {
+            alert('コピーに失敗しました。');
+          });
+      }
+    }
+  </script>
+
+</body>
+</html>
