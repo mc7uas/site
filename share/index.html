@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>カスタム共有 - ううう</title>
+  <title>ううう - トップページ</title>
 
-  <meta property="og:title" content="ううう - 共有ジェネレーター">
-  <meta property="og:description" content="好きな説明文を入力してシェアできます。">
+  <!-- LINE・SNS用の通常OGP設定 -->
+  <meta property="og:title" content="ううう">
+  <meta property="og:description" content="これはペンです。This is a pen.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mc7uas.github.io/site/">
 
   <style>
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: #f5f5f5;
       color: #333;
       max-width: 600px;
@@ -20,209 +22,112 @@
       text-align: center;
     }
 
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
     h1 {
-      margin-bottom: 8px;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
-    .subtitle {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .card {
-      background: #fff;
-      padding: 24px;
+    /* アクセスカウンター枠 */
+    .counter-box {
+      margin: 24px 0;
+      padding: 16px;
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 24px;
-      text-align: left;
+      display: inline-block;
     }
 
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      font-size: 14px;
+    .counter-title {
+      font-size: 13px;
+      color: #6c757d;
       margin-bottom: 6px;
     }
 
-    .preset-select, .custom-textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-      background-color: #fafafa;
-      box-sizing: border-box;
-    }
-
-    .custom-textarea {
-      height: 80px;
-      resize: vertical;
-      font-family: inherit;
-    }
-
-    .preview-box {
-      background: #f0f4f8;
-      border-left: 4px solid #4A5568;
-      padding: 12px 16px;
-      margin-top: 16px;
-      border-radius: 0 4px 4px 0;
-    }
-
-    .preview-title {
-      font-size: 12px;
-      color: #666;
+    .counter-num {
+      font-size: 28px;
       font-weight: bold;
-      margin-bottom: 4px;
+      color: #2b6cb0;
+      font-family: "Courier New", Courier, monospace;
     }
 
-    .preview-text {
-      font-size: 14px;
-      color: #2d3748;
-      word-break: break-all;
-      white-space: pre-wrap;
+    /* ボタン類 */
+    .btn-group {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .share-btn {
-      width: 100%;
-      padding: 12px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
+    .btn {
+      display: block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
       font-weight: bold;
       font-size: 15px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      margin-top: 12px;
+      transition: background-color 0.2s, transform 0.1s;
     }
 
-    .share-btn:hover {
-      background-color: #555;
+    .btn:active {
+      transform: scale(0.98);
     }
 
-    .share-msg {
-      font-size: 13px;
-      color: #2b6cb0;
-      text-align: center;
-      margin-top: 12px;
-      min-height: 18px;
+    .btn-share {
+      background-color: #06C755;
+      color: white;
     }
 
-    .btn-back {
-      display: inline-block;
-      color: #666;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .btn-back:hover {
-      text-decoration: underline;
+    .btn-share:hover {
+      background-color: #05b34c;
     }
   </style>
 </head>
 <body>
 
-  <h1>🔗 カスタム共有ジェネレーター</h1>
-  <p class="subtitle">好きな文章を入力して、SNSやLINE用の共有リンクを作成できます</p>
+  <div class="container">
+    <h1>ううう</h1>
+    <p>これはペンです。This is a pen.</p>
 
-  <div class="card">
-    <!-- 定型文選択 -->
-    <div class="form-group">
-      <label for="presetSelect">定型文から選ぶ:</label>
-      <select id="presetSelect" class="preset-select" onchange="applyPreset()">
-        <option value="">（選択してください）</option>
-        <option value="これはペンです。This is a pen.">これはペンです。This is a pen.</option>
-        <option value="伝説のアクセスカウンターがあるサイトを見つけた！">伝説のアクセスカウンターがあるサイトを見つけた！</option>
-        <option value="ここだけはAIに頼らずに作ったらしい。">ここだけはAIに頼らずに作ったらしい。</option>
-        <option value="マイクラサーバー作ったから来て！">マイクラサーバー作ったから来て！</option>
-      </select>
+    <!-- アクセスカウンター表示部 -->
+    <div class="counter-box">
+      <div class="counter-title">累計アクセスカウンター</div>
+      <div id="visitCount" class="counter-num">読み込み中...</div>
     </div>
 
-    <!-- 自由入力フォーム -->
-    <div class="form-group">
-      <label for="customInput">自由に入力・編集:</label>
-      <textarea id="customInput" class="custom-textarea" placeholder="好きな説明文を入力してください..." oninput="updatePreview()">これはペンです。This is a pen.</textarea>
+    <!-- ページ遷移ボタン -->
+    <div class="btn-group">
+      <a href="./share/" class="btn btn-share">🔗 カスタムカードを作って共有する</a>
     </div>
-
-    <!-- カードプレビュー -->
-    <div class="preview-box">
-      <div class="preview-title">LINE等に表示されるカードの説明文プレビュー:</div>
-      <div id="previewText" class="preview-text">これはペンです。This is a pen.</div>
-    </div>
-
-    <button type="button" class="share-btn" onclick="executeCustomShare()">
-      🔗 この文章で共有リンクを作成
-    </button>
-
-    <p id="shareMsg" class="share-msg"></p>
   </div>
 
-  <a href="../" class="btn-back">← トップページに戻る</a>
-
   <script>
-    // 定型文が選ばれたらテキストエリアに反映
-    function applyPreset() {
-      const select = document.getElementById('presetSelect');
-      if (select.value) {
-        document.getElementById('customInput').value = select.value;
-        updatePreview();
+    // Render上のアクセスカウンターAPIを呼び出す
+    async function loadCounter() {
+      const countEl = document.getElementById('visitCount');
+      try {
+        const response = await fetch('https://site-vjjv.onrender.com/count');
+        const data = await response.json();
+
+        if (data.visits !== undefined) {
+          countEl.textContent = data.visits.toLocaleString() + ' 回';
+        } else {
+          countEl.textContent = '取得失敗';
+        }
+      } catch (err) {
+        console.error('カウンターエラー:', err);
+        countEl.textContent = 'エラー';
       }
     }
 
-    // プレビューの更新
-    function updatePreview() {
-      const text = document.getElementById('customInput').value;
-      document.getElementById('previewText').innerText = text || '（文章が入力されていません）';
-    }
-
-    // 共有実行処理
-    function executeCustomShare() {
-      const inputText = document.getElementById('customInput').value.trim() || 'これはペンです。This is a pen.';
-      const msg = document.getElementById('shareMsg');
-
-      // Renderサーバーの動的シェア用URLを生成
-      const renderServerUrl = 'https://site-vjjv.onrender.com/share';
-      const shareUrl = `${renderServerUrl}?text=${encodeURIComponent(inputText)}`;
-
-      const shareData = {
-        title: 'ううう',
-        text: inputText,
-        url: shareUrl
-      };
-
-      // サーバー疎通チェック（起動中メッセージ表示用）
-      msg.style.color = '#2b6cb0';
-      msg.textContent = '⏳ リンク生成中... サーバー起動中の場合は少しお待ちください（約40秒）';
-
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => {
-            msg.textContent = '';
-          })
-          .catch((err) => {
-            msg.textContent = '';
-            console.log('共有キャンセル', err);
-          });
-      } else {
-        navigator.clipboard.writeText(shareUrl)
-          .then(() => {
-            msg.style.color = '#38A169';
-            msg.textContent = 'カスタム共有URLをコピーしました！';
-            setTimeout(() => { msg.textContent = ''; }, 4000);
-          })
-          .catch(() => {
-            msg.style.color = '#e53e3e';
-            msg.textContent = 'コピーに失敗しました。';
-          });
-      }
-    }
+    // ページ読み込み時にカウンター実行
+    loadCounter();
   </script>
 
 </body>
