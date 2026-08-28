@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ううう</title>
+  <title>カスタム共有 - ううう</title>
 
-  <!-- OGP（SNS・LINE用プレビュー設定） -->
-  <meta property="og:title" content="ううう">
-  <meta property="og:description" content="これはペンです。This is a pen.">
+  <meta property="og:title" content="ううう - 共有ジェネレーター">
+  <meta property="og:description" content="好きな説明文を入力してシェアできます。">
   <meta property="og:type" content="website">
 
   <style>
-    /* 全体の基本設定 */
     body {
       font-family: sans-serif;
       background-color: #f5f5f5;
@@ -22,249 +20,206 @@
       text-align: center;
     }
 
-    /* タイトルなどの見出し */
-    h1, h2 {
-      margin-bottom: 10px;
+    h1 {
+      margin-bottom: 8px;
     }
 
-    /* アクセスカウンターの枠組み */
-    .counter-container {
-      margin: 30px 0;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    /* 数字部分（黒背景＋緑文字のレトロ風） */
-    #count {
-      display: inline-block;
-      background-color: #111;
-      color: #00ff66;
-      font-family: 'Courier New', monospace;
-      font-size: 24px;
-      padding: 4px 12px;
-      border-radius: 4px;
-      letter-spacing: 3px;
-      margin-left: 8px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
-    }
-
-    /* 中央配置の検索フォーム */
-    .search-form {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .search-input {
-      padding: 8px 12px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      outline: none;
-      width: 200px;
-    }
-
-    .search-input:focus {
-      border-color: #333;
-    }
-
-    .search-button {
-      padding: 8px 16px;
-      font-size: 14px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .search-button:hover {
-      background-color: #555;
-    }
-
-    /* 注釈テキスト（グレー表示） */
-    .note {
-      color: #808080;
-      margin-top: 40px;
-      font-size: 14px;
-    }
-
-    /* ナビゲーション・リンクエリア */
-    .link-container {
-      margin-top: 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    /* 黒ボタン（お問い合わせなど） */
-    .nav-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #333;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-      font-size: 14px;
-      transition: background-color 0.2s;
-    }
-
-    .nav-btn:hover {
-      background-color: #555;
-    }
-
-    /* 定型文選択＆共有エリア */
-    .share-area {
-      background: #fff;
-      padding: 16px 20px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: 100%;
-      max-width: 320px;
-      box-sizing: border-box;
-    }
-
-    .share-label {
-      font-size: 12px;
-      font-weight: bold;
+    .subtitle {
       color: #666;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
       text-align: left;
     }
 
-    .preset-select {
-      padding: 8px;
-      font-size: 13px;
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .preset-select, .custom-textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 4px;
       outline: none;
       background-color: #fafafa;
-      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    .custom-textarea {
+      height: 80px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .preview-box {
+      background: #f0f4f8;
+      border-left: 4px solid #4A5568;
+      padding: 12px 16px;
+      margin-top: 16px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .preview-title {
+      font-size: 12px;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .preview-text {
+      font-size: 14px;
+      color: #2d3748;
+      word-break: break-all;
+      white-space: pre-wrap;
     }
 
     .share-btn {
-      padding: 10px;
-      background-color: #4A5568;
+      width: 100%;
+      padding: 12px;
+      background-color: #333;
       color: #fff;
       border: none;
       border-radius: 4px;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 15px;
       cursor: pointer;
       transition: background-color 0.2s;
+      margin-top: 12px;
     }
 
     .share-btn:hover {
-      background-color: #2D3748;
+      background-color: #555;
     }
 
     .share-msg {
-      font-size: 12px;
-      color: #38A169;
-      margin: 0;
-      min-height: 16px;
+      font-size: 13px;
+      color: #2b6cb0;
+      text-align: center;
+      margin-top: 12px;
+      min-height: 18px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .btn-back:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <!-- カウンター部分 -->
-  <p class="counter-container">
-    アクセスカウンター: <span id="count">000000</span>
-  </p>
+  <h1>🔗 カスタム共有ジェネレーター</h1>
+  <p class="subtitle">好きな文章を入力して、SNSやLINE用の共有リンクを作成できます</p>
 
-  <h1>これはペンです。</h1>
-  <h2>This is a pen.</h2>
-
-  <!-- 中央配置の検索エリア -->
-  <search>
-    <div class="search-form">
-      <input type="search" id="pageSearchInput" placeholder="検索..." class="search-input" onkeydown="if(event.key==='Enter') searchOnPage()">
-      <button type="button" onclick="searchOnPage()" class="search-button">検索</button>
-    </div>
-  </search>
-
-  <p class="note">ここだけはAIに頼らずに作った。</p>
-
-  <!-- リンク＆共有ボタンエリア -->
-  <div class="link-container">
-    <a href="./contact/" class="nav-btn">お問い合わせはこちら</a>
-
-    <!-- 定型文選択付き共有ボックス -->
-    <div class="share-area">
-      <label class="share-label" for="presetSelect">共有メッセージを選択:</label>
-      <select id="presetSelect" class="preset-select">
-        <option value="これはペンです。This is a pen.">これはペンです。（デフォルト）</option>
-        <option value="伝説のレトロアクセスカウンターがあるサイトを見つけた！">伝説のアクセスカウンターを見つけた！</option>
+  <div class="card">
+    <!-- 定型文選択 -->
+    <div class="form-group">
+      <label for="presetSelect">定型文から選ぶ:</label>
+      <select id="presetSelect" class="preset-select" onchange="applyPreset()">
+        <option value="">（選択してください）</option>
+        <option value="これはペンです。This is a pen.">これはペンです。This is a pen.</option>
+        <option value="伝説のアクセスカウンターがあるサイトを見つけた！">伝説のアクセスカウンターがあるサイトを見つけた！</option>
         <option value="ここだけはAIに頼らずに作ったらしい。">ここだけはAIに頼らずに作ったらしい。</option>
-        <option value="お問い合わせページが絶望的でおすすめです。">絶望のお問い合わせページ</option>
+        <option value="マイクラサーバー作ったから来て！">マイクラサーバー作ったから来て！</option>
       </select>
-
-      <button type="button" class="share-btn" onclick="shareSite()">
-        🔗 選択した文章で共有する
-      </button>
-      <p id="shareMsg" class="share-msg"></p>
     </div>
+
+    <!-- 自由入力フォーム -->
+    <div class="form-group">
+      <label for="customInput">自由に入力・編集:</label>
+      <textarea id="customInput" class="custom-textarea" placeholder="好きな説明文を入力してください..." oninput="updatePreview()">これはペンです。This is a pen.</textarea>
+    </div>
+
+    <!-- カードプレビュー -->
+    <div class="preview-box">
+      <div class="preview-title">LINE等に表示されるカードの説明文プレビュー:</div>
+      <div id="previewText" class="preview-text">これはペンです。This is a pen.</div>
+    </div>
+
+    <button type="button" class="share-btn" onclick="executeCustomShare()">
+      🔗 この文章で共有リンクを作成
+    </button>
+
+    <p id="shareMsg" class="share-msg"></p>
   </div>
 
-  <!-- スクリプト類 -->
+  <a href="../" class="btn-back">← トップページに戻る</a>
+
   <script>
-    // 1. アクセスカウンター処理
-    fetch('https://site-vjjv.onrender.com/count')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('count').innerText = String(data.visits).padStart(6, '0');
-      })
-      .catch(err => {
-        console.error('取得失敗:', err);
-      });
-
-    // 2. ページ内検索処理
-    function searchOnPage() {
-      const input = document.getElementById('pageSearchInput');
-      const query = input.value.trim();
-
-      if (!query) return;
-
-      const found = window.find(query);
-
-      if (!found) {
-        alert('「' + query + '」は見つかりませんでした！');
+    // 定型文が選ばれたらテキストエリアに反映
+    function applyPreset() {
+      const select = document.getElementById('presetSelect');
+      if (select.value) {
+        document.getElementById('customInput').value = select.value;
+        updatePreview();
       }
     }
 
-    // 3. 定型文付きサイト共有処理
-    function shareSite() {
-      const select = document.getElementById('presetSelect');
-      const selectedText = select.value;
+    // プレビューの更新
+    function updatePreview() {
+      const text = document.getElementById('customInput').value;
+      document.getElementById('previewText').innerText = text || '（文章が入力されていません）';
+    }
+
+    // 共有実行処理
+    function executeCustomShare() {
+      const inputText = document.getElementById('customInput').value.trim() || 'これはペンです。This is a pen.';
+      const msg = document.getElementById('shareMsg');
+
+      // Renderサーバーの動的シェア用URLを生成
+      const renderServerUrl = 'https://site-vjjv.onrender.com/share';
+      const shareUrl = `${renderServerUrl}?text=${encodeURIComponent(inputText)}`;
 
       const shareData = {
-        title: document.title || 'ううう',
-        text: selectedText,
-        url: window.location.href
+        title: 'ううう',
+        text: inputText,
+        url: shareUrl
       };
 
-      // スマホ（LINEやXの共有メニューが開く）
+      // サーバー疎通チェック（起動中メッセージ表示用）
+      msg.style.color = '#2b6cb0';
+      msg.textContent = '⏳ リンク生成中... サーバー起動中の場合は少しお待ちください（約40秒）';
+
       if (navigator.share) {
         navigator.share(shareData)
-          .catch((err) => console.log('共有がキャンセルされました', err));
-      } else {
-        // PC（テキスト + URL をコピー）
-        const textToCopy = selectedText + '\n' + window.location.href;
-        navigator.clipboard.writeText(textToCopy)
           .then(() => {
-            const msg = document.getElementById('shareMsg');
-            msg.textContent = '文章とURLをコピーしました！';
-            setTimeout(() => { msg.textContent = ''; }, 3000);
+            msg.textContent = '';
+          })
+          .catch((err) => {
+            msg.textContent = '';
+            console.log('共有キャンセル', err);
+          });
+      } else {
+        navigator.clipboard.writeText(shareUrl)
+          .then(() => {
+            msg.style.color = '#38A169';
+            msg.textContent = 'カスタム共有URLをコピーしました！';
+            setTimeout(() => { msg.textContent = ''; }, 4000);
           })
           .catch(() => {
-            alert('コピーに失敗しました。');
+            msg.style.color = '#e53e3e';
+            msg.textContent = 'コピーに失敗しました。';
           });
       }
     }
